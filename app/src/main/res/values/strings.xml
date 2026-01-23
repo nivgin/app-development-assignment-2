@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">app-development-assignment-2</string>
+    <string name="add_student">+</string>
 </resources>
