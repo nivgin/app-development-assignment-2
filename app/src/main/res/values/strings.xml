@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">app-development-assignment-2</string>
     <string name="add_student">+</string>
+    <string name="save_student">Save Student</string>
+    <string name="cancel">Cancel</string>
+    <string name="student_name">Student Name</string>
+    <string name="student_id">Student ID</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="checked">Checked</string>
 </resources>

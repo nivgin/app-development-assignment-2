@@ -10,34 +10,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_development_assignment_2.model.Student
+import com.example.app_development_assignment_2.model.StudentsRepository
 import com.example.app_development_assignment_2.studentList.StudentRecyclerViewAdapter
 
 class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        val tempStudents: MutableList<Student> = listOf(
-            Student(
-                name = "Alice Johnson",
-                id = "S001",
-                phone = "123-456-7890",
-                address = "123 Maple Street",
-                checked = false
-            ),
-            Student(
-                name = "Bob Smith",
-                id = "S002",
-                phone = "234-567-8901",
-                address = "456 Oak Avenue",
-                checked = true
-            ),
-            Student(
-                name = "Charlie Brown",
-                id = "S003",
-                phone = "345-678-9012",
-                address = "789 Pine Lane",
-                checked = false
-            )
-        ) as MutableList<Student>
+    private lateinit var adapter: StudentRecyclerViewAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -51,14 +30,18 @@ class MainActivity : AppCompatActivity() {
         val studentsView = findViewById<RecyclerView>(R.id.RecyclerView)
         studentsView.setHasFixedSize(true)
         studentsView.layoutManager = LinearLayoutManager(this)
-        //val students = StudentsRepository.instance.Students
-        val students = tempStudents
-        val adapter = StudentRecyclerViewAdapter(students)
+        val students = StudentsRepository.instance.Students
+        adapter = StudentRecyclerViewAdapter(students)
         studentsView.adapter = adapter
 
         val addStudent = findViewById<Button>(R.id.add_student_button)
         addStudent.setOnClickListener {
             startActivity(Intent(this, AddStudentActivity::class.java))
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
     }
 }
