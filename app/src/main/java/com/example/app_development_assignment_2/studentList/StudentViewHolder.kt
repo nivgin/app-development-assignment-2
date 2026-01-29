@@ -1,6 +1,8 @@
 package com.example.app_development_assignment_2.studentList
 
+import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -8,14 +10,20 @@ import com.example.app_development_assignment_2.R
 import com.example.app_development_assignment_2.databinding.StudentRowLayoutBinding
 import com.example.app_development_assignment_2.model.Student
 
-class StudentViewHolder (private var binding: StudentRowLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+class StudentViewHolder (private val onClick: (Student) -> Unit, private var binding: StudentRowLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
     private var student: Student? = null
 
     init {
-        binding.checkbox.setOnClickListener {
-            view -> (view?.tag as? Int)?.let {
-                student?.checked = (view as? CheckBox)?.isChecked ?: false
+        binding.checkbox.setOnClickListener { view ->
+            student?.let {
+                it.checked = (view as? CheckBox)?.isChecked ?: false
+            }
+        }
+
+        binding.root.setOnClickListener() {
+            student?.let {
+                onClick(it)
             }
         }
     }
