@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.OnSwipe
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,9 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_development_assignment_2.model.Student
 import com.example.app_development_assignment_2.model.StudentsRepository
 import com.example.app_development_assignment_2.studentList.StudentRecyclerViewAdapter
-
+import android.util.Log
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: StudentRecyclerViewAdapter
+
+    fun onStudentClick(student: Student) {
+        val intent = Intent(this, ViewStudentActivity::class.java)
+        intent.putExtra("student_index", StudentsRepository.instance.Students.indexOf(student))
+        startActivity(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -31,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         studentsView.setHasFixedSize(true)
         studentsView.layoutManager = LinearLayoutManager(this)
         val students = StudentsRepository.instance.Students
-        adapter = StudentRecyclerViewAdapter(students)
+        adapter = StudentRecyclerViewAdapter(::onStudentClick, students)
         studentsView.adapter = adapter
 
         val addStudent = findViewById<Button>(R.id.add_student_button)

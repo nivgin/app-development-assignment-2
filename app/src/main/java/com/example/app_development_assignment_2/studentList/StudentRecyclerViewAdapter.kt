@@ -7,11 +7,11 @@ import com.example.app_development_assignment_2.R
 import com.example.app_development_assignment_2.databinding.StudentRowLayoutBinding
 import com.example.app_development_assignment_2.model.Student
 
-class StudentRecyclerViewAdapter(var students: MutableList<Student>?) : RecyclerView.Adapter<StudentViewHolder>() {
+class StudentRecyclerViewAdapter(private val onStudentClick: (Student) -> Unit, private var students: MutableList<Student>?) : RecyclerView.Adapter<StudentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
         val binding = StudentRowLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return StudentViewHolder(binding)
+        return StudentViewHolder(onStudentClick, binding)
     }
 
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
